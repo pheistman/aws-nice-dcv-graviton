@@ -107,10 +107,9 @@ resource "aws_instance" "ubuntu-2204-nice-dcv-ea" {
   user_data = <<-EOF
               #!/bin/bash
               cd /home/ubuntu
-              mkdir -p /home/ubuntu/nice
-              git clone https://github.com/pheistman/aws-nice-dcv-desktop.git /home/ubuntu/nice
-              chmod +x /home/ubuntu/nice/dcv_ubuntu_installation.sh
-              /home/ubuntu/nice/dcv_ubuntu_installation.sh
+              wget https://raw.githubusercontent.com/pheistman/aws-nice-dcv-graviton/main/dcv_ubuntu_installation.sh
+              chmod +x /home/ubuntu/dcv_ubuntu_installation.sh
+              /home/ubuntu/dcv_ubuntu_installation.sh
               EOF
 }
 

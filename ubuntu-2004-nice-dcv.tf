@@ -94,7 +94,7 @@ resource "aws_instance" "ubuntu-2204-nice-dcv-ea" {
   #key_name                    = "stickee-aws"
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.aws-nice-dcv-public-subnet.id
-  iam_instance_profile        = aws_iam_instance_profile.NICEDCVLicenseInstanceProfile.name
+  iam_instance_profile        = aws_iam_instance_profile.NICEDCVLicenseInstanceProfileGraviton.name
   vpc_security_group_ids      = [aws_security_group.ubuntu-nice-dcv-sg-ea.id]
   depends_on = [
     aws_internet_gateway.aws-nice-dcv-igw
@@ -141,8 +141,8 @@ resource "aws_cloudwatch_metric_alarm" "idle-instance-stop" {
   }
 }
 
-resource "aws_iam_policy" "DCVLicensePolicy" {
-  name        = "DCVLicensePolicy"
+resource "aws_iam_policy" "DCVLicensePolicy_graviton" {
+  name        = "DCVLicensePolicy_graviton"
   path        = "/"
   description = "Policy to allow NICE EC2 access S3 license object"
 
@@ -161,8 +161,8 @@ resource "aws_iam_policy" "DCVLicensePolicy" {
   })
 }
 
-resource "aws_iam_role" "DCVLicenseAccessRole" {
-  name        = "DCVLicenseAccessRole"
+resource "aws_iam_role" "DCVLicenseAccessRoleGraviton" {
+  name        = "DCVLicenseAccessRoleGraviton"
   description = "Role to allow NICE EC2 access S3 license object"
 
   # Terraform's "jsonencode" function converts a
@@ -185,13 +185,13 @@ resource "aws_iam_role" "DCVLicenseAccessRole" {
 
 resource "aws_iam_policy_attachment" "NICEPolicyAttachment" {
   name       = "NICEPolicyAttachment."
-  roles      = [aws_iam_role.DCVLicenseAccessRole.name]
-  policy_arn = aws_iam_policy.DCVLicensePolicy.arn
+  roles      = [aws_iam_role.DCVLicenseAccessRoleGraviton.name]
+  policy_arn = aws_iam_policy.DCVLicensePolicy_graviton.arn
 }
 
-resource "aws_iam_instance_profile" "NICEDCVLicenseInstanceProfile" {
-  name   = "NICEDCVLicenseInstanceProfile"
-  role   = aws_iam_role.DCVLicenseAccessRole.name
+resource "aws_iam_instance_profile" "NICEDCVLicenseInstanceProfileGraviton" {
+  name   = "NICEDCVLicenseInstanceProfileGraviton"
+  role   = aws_iam_role.DCVLicenseAccessRoleGraviton.name
 }
 
 resource "aws_security_group" "ubuntu-nice-dcv-sg-ea" {

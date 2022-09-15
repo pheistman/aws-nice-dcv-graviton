@@ -178,6 +178,9 @@ cd nice-dcv-*aarch64
 # install all packages
 sudo apt install -y ./nice-*arm64.ubuntu*.deb
 
+# Install Firefox and terminator terminal
+sudo apt install -y firefox terminator
+
 sudo usermod -aG video dcv
 
 # for USB support install

@@ -159,15 +159,15 @@ rm NICE-GPG-KEY
 
 if [ "`cat /etc/issue | grep 18.04`" != "" ] ; then
     dcv_server=`curl --silent --output - https://download.nice-dcv.com/ | \
-grep href | egrep "$dcv_version" | egrep "ubuntu1804" | grep Server | \
+grep href | egrep "$dcv_version" | egrep "ubuntu1804-aarch64" | grep Server | \
 sed -e 's/.*http/http/' -e 's/tgz.*/tgz/' | head -1`
 elif [ "`cat /etc/issue | grep 20.04`" != "" ] ; then
     dcv_server=`curl --silent --output - https://download.nice-dcv.com/ | \
-grep href | egrep "$dcv_version" | egrep "ubuntu2004" | grep Server | \
+grep href | egrep "$dcv_version" | egrep "ubuntu2004-aarch64" | grep Server | \
 sed -e 's/.*http/http/' -e 's/tgz.*/tgz/' | head -1`
 else
     dcv_server=`curl --silent --output - https://download.nice-dcv.com/ | \
-grep href | egrep "$dcv_version" | egrep "ubuntu2204" | grep Server | \
+grep href | egrep "$dcv_version" | egrep "ubuntu2204-aarch64" | grep Server | \
 sed -e 's/.*http/http/' -e 's/tgz.*/tgz/' | head -1`
 fi
 echo Installing DCV from $dcv_server
@@ -176,7 +176,7 @@ wget $dcv_server
 tar zxvf nice-dcv-*ubun*.tgz
 cd nice-dcv-*aarch64
 # install all packages
-sudo apt install -y ./nice-*aarch64.ubuntu*.deb
+sudo apt install -y ./nice-*arm64.ubuntu*.deb
 
 sudo usermod -aG video dcv
 
